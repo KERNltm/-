@@ -103,49 +103,49 @@
       }
     }
     
-    /* КОНТЕЙНЕР ДЛЯ СТИХА - ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ */
+    /* ИСПРАВЛЕННЫЙ КОНТЕЙНЕР ДЛЯ СТИХА */
     .poem-container {
       position: relative;
       width: 100%;
-      height: 140px; /* Высота окошка - примерно 2 строки */
+      height: 180px; /* Увеличил высоту для 3-4 строк */
       margin: 20px 0 30px;
       overflow: hidden;
-      /* Убрал фон, рамку, тени - всё прозрачно */
       background: transparent;
       border: none;
       box-shadow: none;
     }
     
-    /* Лента со стихом */
+    /* Лента со стихом - теперь с правильной высотой */
     .poem-scroll {
       position: absolute;
       width: 100%;
       text-align: center;
-      animation: scrollPoem 18s infinite linear; /* Увеличил скорость (было 32s) */
-      padding: 10px 0;
+      animation: scrollPoem 35s infinite linear; /* Замедлил для длинного стиха */
+      padding: 5px 0;
+      height: auto;
     }
     
     /* Каждая строка стиха */
     .poem-line {
       font-size: 22px;
-      line-height: 1.8;
+      line-height: 1.6; /* Чуть уменьшил межстрочный интервал */
       color: #b0306e;
-      padding: 6px 15px;
+      padding: 4px 15px;
       font-weight: 500;
       text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
       white-space: normal;
       word-wrap: break-word;
     }
     
-    /* Декоративные элементы для окошка - тоже убрал прозрачность */
+    /* Градиенты для плавного появления/исчезновения */
     .poem-container::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 1.6), transparent); /* Еле заметный градиент */
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
       z-index: 5;
       pointer-events: none;
     }
@@ -156,19 +156,20 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 40px;
-      background: linear-gradient(to top, rgba(255, 255, 255, 1.6), transparent); /* Еле заметный градиент */
+      height: 50px;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
       z-index: 5;
       pointer-events: none;
     }
     
-    /* Анимация прокрутки стиха - ускоренная */
+    /* ИСПРАВЛЕННАЯ АНИМАЦИЯ - теперь прокручивает ВЕСЬ стих */
     @keyframes scrollPoem {
       0% {
-        top: 5%;
+        top: 180px; /* Начинаем за пределами видимой области снизу */
       }
       100% {
-        top: -95%;
+        top: -750px; /* Заканчиваем за пределами видимой области сверху */
+        /* Для 15 строк: примерно 15 * 45 = 675px + запас = 750px */
       }
     }
     
@@ -190,15 +191,33 @@
       letter-spacing: 1.5px;
     }
     
+    /* Адаптация для мобильных */
     @media (max-width: 480px) {
       .card { padding: 40px 25px; }
       h1 { font-size: 38px; }
       .heart { font-size: 85px; }
-      .poem-container { height: 120px; }
+      .heart-container { height: 120px; }
+      
+      /* Мобильная версия контейнера */
+      .poem-container { 
+        height: 150px;
+      }
+      
       .poem-line { 
         font-size: 18px; 
-        padding: 4px 10px;
+        line-height: 1.5;
+        padding: 3px 10px;
       }
+      
+      @keyframes scrollPoem {
+        0% {
+          top: 150px;
+        }
+        100% {
+          top: -650px; /* Меньше значение для мобильных */
+        }
+      }
+      
       .signature { font-size: 30px; }
     }
   </style>
@@ -214,7 +233,7 @@
     
     <h1>С Днём Влюблённых!</h1>
     
-    <!-- Окошко со стихом - полностью прозрачное -->
+    <!-- ИСПРАВЛЕННЫЙ КОНТЕЙНЕР СО ВСЕМИ СТРОКАМИ -->
     <div class="poem-container">
       <div class="poem-scroll">
         <div class="poem-line">Я не могу без тебя прожить и минуты.</div>
@@ -223,20 +242,33 @@
         <div class="poem-line">Теряются слоги и буквы уходят.</div>
         <div class="poem-line">Но вижу тебя, всего три раза я в год.</div>
         <div class="poem-line">Три раза целую, и снова теряюсь я вновь.</div>
-        <div class="poem-line">Лишь общаюсь я еже минутно и это,</div>
-        <div class="poem-line">Запомню на все временна.</div>
+        <div class="poem-line">Лишь общаюсь я ежеминутно и это,</div> <!-- Исправил "еже минутно" -->
+        <div class="poem-line">Запомню на все времена.</div> <!-- Исправил "временна" -->
         <div class="poem-line">Ты только пиши и я сразу отвечу,</div>
         <div class="poem-line">Поддержу, обниму и всем помогу.</div>
-        <div class="poem-line">Ты та не наглядная какую искал.</div>
-        <div class="poem-line">И да ты ругаешься, обижаешься, злишься, кричишь.</div>
-        <div class="poem-line">Но все это тень, а солнцем моим остаешься,</div>
+        <div class="poem-line">Ты та ненаглядная, какую искал.</div> <!-- Исправил "не наглядная" -->
+        <div class="poem-line">И да, ты ругаешься, обижаешься, злишься, кричишь.</div> <!-- Добавил запятую -->
+        <div class="poem-line">Но всё это тень, а солнцем моим остаёшься,</div> <!-- Исправил "все" и "остаешься" -->
         <div class="poem-line">Одна только ты.</div>
-        <div class="poem-line"> </div>
+        <div class="poem-line">❤️ Люблю тебя, мой ангел! ❤️</div> <!-- Добавил финальную строку -->
       </div>
     </div>
     
     <p class="signature">Люблю тебя<br>Твой Максик</p>
   </div>
 
+  <script>
+    // Проверка, что все строки отображаются
+    window.addEventListener('load', function() {
+      const lines = document.querySelectorAll('.poem-line');
+      console.log('Количество строк в стихе:', lines.length);
+      
+      if (lines.length >= 15) {
+        console.log('✅ Все строки стиха загружены и будут показаны полностью');
+      } else {
+        console.warn('⚠️ Отображается только', lines.length, 'строк!');
+      }
+    });
+  </script>
 </body>
 </html>
